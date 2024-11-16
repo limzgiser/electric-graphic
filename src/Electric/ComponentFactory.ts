@@ -9,6 +9,8 @@ class ComponentFactory {
 
                 return new Konva.Rect(params)
 
+            case 'image':
+                return new Konva.Image(params)
 
             case 'line':
 
@@ -21,6 +23,10 @@ class ComponentFactory {
             case 'textpath':
 
                 return new Konva.TextPath(params)
+
+            case 'shape':
+
+                return new Konva.Shape(params)
 
         }
     }

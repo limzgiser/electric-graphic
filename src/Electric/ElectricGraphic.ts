@@ -22,7 +22,11 @@ class ElectriGraphic {
 
     public render() {
 
-        new Mppt([], this._group).render()
+        if (this._data) {
+
+            new Mppt(["N2-PV3-9", "N2-PV4-9"], this._group).render()
+        }
+
     }
 }
 
