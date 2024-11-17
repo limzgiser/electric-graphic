@@ -1,10 +1,9 @@
 const ElectricData = [
+
     {
         "SG10RT-20": {
             "MPPT1": [
-                "N1-PV1-9",
-
-
+                "N1-PV1-9"
             ],
             "MPPT2": [
                 "N1-PV2-9"
@@ -21,16 +20,9 @@ const ElectricData = [
                 "N2-PV5-9"
             ]
         }
-    },
-    {
-        "SG15RT-21": {
-            "MPPT1": [
-                "N2-PV6-9",
-                "N2-PV4-9"
-            ]
-        }
     }
 ]
+
 
 
 const data2 = { "aNumNew": [["N1-PV1-9", "N1-PV2-9"], ["N2-PV3-9", "N2-PV4-9", "N2-PV5-9"]], "parallelMeshBox": "并网箱", "sNum": [[["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"], ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"]], [["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"], ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"], ["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9"]]], "aStrNew": [["N1-PV1-9(+)~N1-PV2-9(+)", "N1-PV1-9(-)~N1-PV2-9(-)"], ["N2-PV3-9(+)~N2-PV5-9(+)", "N2-PV3-9(-)~N2-PV5-9(-)"]], "aNum": [["ZC010101_9", "ZC010201_9"], ["ZC020101_9", "ZC020102_9", "ZC020201_9"]], "photovoltaicCable": [{ "searchValue": null, "createBy": null, "createTime": null, "updateBy": null, "updateTime": null, "remark": null, "params": {}, "stationId": null, "materialNo": "JC000028", "materialName": null, "materialSpec": "光伏专用电缆_PV_TUV_4mm2_B_黑_600/1000V_6B_S", "materialNum": "43", "materialLength": null, "materialTotalLength": null, "materialUnit": "M", "primaryClassify": null, "secondaryClassify": null, "serialNum": 5 }, { "searchValue": null, "createBy": null, "createTime": null, "updateBy": null, "updateTime": null, "remark": null, "params": {}, "stationId": null, "materialNo": "JD000318", "materialName": null, "materialSpec": "光伏专用电缆_PV_TUV_4mm2_B_红_600/1000V_6B_S", "materialNum": "71", "materialLength": null, "materialTotalLength": null, "materialUnit": "M", "primaryClassify": null, "secondaryClassify": null, "serialNum": 6 }], "aStr": [["ZC010101_9(+)~ZC010201_9(+)", "ZC010101_9(-)~ZC010201_9(-)"], ["ZC020101_9(+)~ZC020201_9(+)", "ZC020101_9(-)~ZC020201_9(-)"]], "serialNo": ["逆变器NB01(SG10RT-20)", "逆变器NB02(SG15RT-20)"] }

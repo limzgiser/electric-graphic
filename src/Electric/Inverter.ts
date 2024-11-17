@@ -16,6 +16,9 @@ class Inverter {
 
     public calcTableName = new Konva.Group()
 
+    // 光伏测电线名称
+    public elecLineNameGroup = new Konva.Group()
+
     get group() {
         return this._group
     }
@@ -29,6 +32,8 @@ class Inverter {
 
         this.group.add(this.inverTerBox)
         this._group.add(this.arrowGroup)
+
+        this._group.add(this.elecLineNameGroup)
 
         this._group.add(this.calcTabelGroup)
 
@@ -49,7 +54,7 @@ class Inverter {
             x: x + MPPT_BOX_SIZE[1],
             y: y,
             text: "AC",
-            fontSize: FONT_SIXE * 1.4,
+            fontSize: FONT_SIXE * 1.2,
             offset: { x: 80, y: -35 },
 
             fill: '#000',
@@ -63,7 +68,7 @@ class Inverter {
             x: x,
             y: y + height,
             text: "DC",
-            fontSize: FONT_SIXE * 1.4,
+            fontSize: FONT_SIXE * 1.2,
             fill: '#000',
             offset: { x: -30, y: 60 },
         })
@@ -125,7 +130,7 @@ class Inverter {
 
         this.group.add(group)
         const circle = ComponentFactory.create('circle', {
-            x: x,
+            x: x + 200,
             y: y,
             radius: 40,
             fill: '#fff',
@@ -140,10 +145,10 @@ class Inverter {
         }
 
         const labelText = ComponentFactory.create('text', {
-            x: x,
+            x: x + 200,
             y: y,
             text: "电网",
-            fontSize: FONT_SIXE * 1.4,
+            fontSize: FONT_SIXE * 1.2,
             fill: '#000',
         })
 
@@ -155,12 +160,11 @@ class Inverter {
 
 
         const line = ComponentFactory.create('line', {
-            points: [x + width, y + height / 2, x + width / 2 + 260, y + height / 2],
+            points: [x + width, y + height / 2, x + width / 2 + 460, y + height / 2],
             stroke: '#000',
             strokeWidth: 1,
             opacity: LineOpacity,
         })
-
 
         line && this.group.add(line)
 
@@ -168,6 +172,25 @@ class Inverter {
             x: -width * 2,
             y: -height / 2
         })
+
+
+        const labelName = ComponentFactory.create('text', {
+            x: x + width,
+            y: y + height / 2,
+            text: "接入测:ZC-yjlv-0.6/1kw03*50+125mm",
+            fontSize: FONT_SIXE * 1.2,
+
+
+            fill: '#000',
+        })
+
+        if (labelName) {
+
+            labelName.offsetY(labelName.height() + 40)
+            this.group.add(labelName)
+        }
+
+
     }
 
 
@@ -186,7 +209,7 @@ class Inverter {
         arrowGroupChildren.forEach(children => {
             const { x, y, width, height } = children.getClientRect();
 
-            const lineLen = 200
+            const lineLen = 400
 
             const line = ComponentFactory.create('line', {
                 points: [x + width / 2, y + height / 2, x + width / 2 + lineLen, y + height / 2],
@@ -219,7 +242,7 @@ class Inverter {
             const rect = ComponentFactory.create('rect', {
                 x: x,
                 y: y,
-                width: width,
+                width: 200,
                 height: 70,
                 stroke: '#000',
                 strokeWidth: 1,
@@ -227,13 +250,13 @@ class Inverter {
             })
 
             if (rect) {
-                rect.offsetX(-width - 200)
+                rect.offsetX(-width - 250)
                 rect.offsetY(-height / 2 + 35)
                 rect && this.calcTableName.add(rect)
             }
 
             const line = ComponentFactory.create('line', {
-                points: [x, y, x + width, y],
+                points: [x, y, x + 250, y],
                 stroke: '#000',
                 strokeWidth: 1
             })
@@ -250,18 +273,43 @@ class Inverter {
                 x: x,
                 y: y,
                 text: "计量表",
-                fontSize: FONT_SIXE * 1.4,
+                fontSize: FONT_SIXE * 1.2,
                 fill: '#000',
             })
 
             if (labelText) {
-                labelText.offsetX(-width - 200 - 60)
+                labelText.offsetX(-width - 250 - 60)
                 labelText.offsetY(-height / 2 + 15)
                 this.calcTableName.add(labelText)
             }
 
         }
 
+    }
+
+    /**
+     * 绘制光伏测电线名称
+     */
+    renderElecLineNames(data: any, name: string) {
+
+        if (!data) return
+
+        let [x1, y1, x2, y2] = data
+
+        // 逆变器名称
+        const nameText = ComponentFactory.create('text', {
+            x: x2,
+            y: y1 + (y2 - y1) / 2,
+            text: name,
+            fontSize: FONT_SIXE * 1.2,
+            fill: '#000',
+        })
+
+        if (nameText) {
+            nameText.offsetX(-30)
+            nameText.offsetY(nameText.height() * 2)
+            this._acDcLines.add(nameText)
+        }
     }
 
     render(data: any, source: any) {
@@ -315,7 +363,7 @@ class Inverter {
                     x: x,
                     y: y,
                     text: getInverterName(i),
-                    fontSize: FONT_SIXE * 1.4,
+                    fontSize: FONT_SIXE * 1.2,
                     fill: '#000',
                 })
 
@@ -341,6 +389,7 @@ class Inverter {
 
                 this.renderBoxInterFace(points)
 
+                this.renderElecLineNames(points, 'ZC-YJY-0.6/1kv-3*25+2.6*16mm')
 
             }
         }
