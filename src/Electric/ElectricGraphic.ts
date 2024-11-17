@@ -24,7 +24,16 @@ class ElectriGraphic {
 
         if (this._data) {
 
-            new Mppt(["N2-PV3-9", "N2-PV4-9"], this._group).render()
+            const group1 = new Mppt(["N2-PV3-9", "N2-PV4-9"], this._group)
+
+            group1.render()
+
+            const { width, height } = group1.group.getClientRect();
+
+            const group2 = new Mppt(["N2-PV5-9"], this._group)
+
+            group2.render()
+            group2.group.offsetY(-height + 1)
         }
 
     }

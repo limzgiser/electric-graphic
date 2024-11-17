@@ -1,6 +1,6 @@
-const MPPT_BOX_SIZE = [40, 250] // MPPT 盒子大小
+const MPPT_BOX_SIZE = [40, 200] // MPPT 盒子大小
 
-const FONT_SIXE = 24
+const FONT_SIXE = 20
 
 const MPPT_INTERFACE_SIZE = [20, 15] // MPPT +/1 方块大小
 
@@ -11,6 +11,10 @@ const ComponentSize = [125, 45]
 const ComponentSpace = 20
 
 const SubAddSpace = 20 //   正负极间距
+
+const BorderSize = 1
+
+
 export {
     MPPT_BOX_SIZE,
     FONT_SIXE,
@@ -19,6 +23,7 @@ export {
 
     ComponentSize,
     ComponentSpace,
-    SubAddSpace
+    SubAddSpace,
+    BorderSize
 }
 

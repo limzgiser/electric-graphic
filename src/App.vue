@@ -28,6 +28,7 @@ onMounted(() => {
 
   electricGraphic.render();
 
+  // group.scale({ x: 1.5, y: 0.5 });
   layer.add(group);
 
   stage.add(layer);

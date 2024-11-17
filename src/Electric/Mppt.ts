@@ -1,6 +1,6 @@
 import Konva from "konva"
 import { ComponentFactory } from "./ComponentFactory"
-import { ComponentSize, ComponentSpace, FONT_SIXE, IconImageSize, MPPT_BOX_SIZE, MPPT_INTERFACE_SIZE } from "./Constant"
+import { BorderSize, ComponentSize, ComponentSpace, FONT_SIXE, IconImageSize, MPPT_BOX_SIZE, MPPT_INTERFACE_SIZE } from "./Constant"
 import { Group } from "konva/lib/Group"
 import { addImage, subImage } from "./data"
 
@@ -33,38 +33,27 @@ class ComLine {
 
             sceneFunc: function (context, shape: any) {
                 context.beginPath();
-
                 context.stroke();
                 context.moveTo(x, y + MPPT_INTERFACE_SIZE[0] / 2 + IconImageSize[0] / 2);
                 context.lineTo(x - ComponentSize[0] / 2, y + MPPT_INTERFACE_SIZE[0] / 2 + IconImageSize[0] / 2);
                 context.lineTo(x - ComponentSize[0] / 2, y);
                 context.lineTo(x - ComponentSize[0] - ComponentSpace, y);
-
                 context.moveTo(x - ComponentSize[0] - ComponentSpace, y + MPPT_INTERFACE_SIZE[1] / 2 + IconImageSize[0] / 2);
-
                 context.lineTo(x - ComponentSize[0] - ComponentSpace - ComponentSize[0] / 2, y + MPPT_INTERFACE_SIZE[1] / 2 + IconImageSize[0] / 2);
-
                 context.moveTo(x - 3 * ComponentSize[0] - 3 * ComponentSpace + ComponentSize[0] / 2, y);
-
                 context.lineTo(x - 3 * ComponentSize[0] - 3 * ComponentSpace, y);
-
                 context.moveTo(x - 3 * ComponentSize[0] - 3 * ComponentSpace, y + MPPT_INTERFACE_SIZE[1]);
-
                 context.lineTo(x - 3 * ComponentSize[0] - 3 * ComponentSpace - ComponentSize[0] / 2, y + MPPT_INTERFACE_SIZE[1]);
-
                 context.lineTo(x - 3 * ComponentSize[0] - 3 * ComponentSpace - ComponentSize[0] / 2, y);
-
                 context.lineTo(x - 4 * ComponentSize[0] - 4 * ComponentSpace, y);
 
                 context.stroke();
-
                 context.beginPath();
-                context.moveTo(x - 4 * ComponentSize[0] - 4 * ComponentSpace, y + MPPT_INTERFACE_SIZE[1]);
                 context.strokeStyle = '#ccc'
+
+                context.moveTo(x - 4 * ComponentSize[0] - 4 * ComponentSpace, y + MPPT_INTERFACE_SIZE[1]);
                 context.lineTo(x - 4 * ComponentSize[0] - 4 * ComponentSpace - ComponentSize[0] / 2, y + MPPT_INTERFACE_SIZE[1]);
-
-                context.lineTo(x - 4 * ComponentSize[0] - 4 * ComponentSpace - ComponentSize[0] / 2, y + MPPT_INTERFACE_SIZE[1] * 3);
-
+                context.lineTo(x - 4 * ComponentSize[0] - 4 * ComponentSpace - ComponentSize[0] / 2, y + MPPT_BOX_SIZE[1] / self.segment);
                 context.lineTo(x, y + MPPT_BOX_SIZE[1] / self.segment);
 
                 context.stroke();
@@ -72,7 +61,7 @@ class ComLine {
             },
 
             // stroke: '#000',
-            strokeWidth: 2,
+            strokeWidth: BorderSize,
         });
 
         this._group.add(path);
@@ -105,9 +94,6 @@ class Component {
             x: pos.x,
             y: pos.y + MPPT_INTERFACE_SIZE[1]
         }
-
-
-
     }
 
     private renderIcon = (imgUrl: string, pos: any) => {
@@ -142,7 +128,7 @@ class Component {
             height: ComponentSize[1],
 
             stroke: 'blue',
-            strokeWidth: 2,
+            strokeWidth: BorderSize,
             drageable: false,
         })
 
@@ -172,6 +158,9 @@ class Mppt {
         return this._data.length
     }
 
+    get group() {
+        return this._group
+    }
 
     constructor(data: Array<string>, group: Konva.Group) {
 
@@ -216,7 +205,7 @@ class Mppt {
             height: MPPT_BOX_SIZE[1],
 
             stroke: '#000',
-            strokeWidth: 2,
+            strokeWidth: BorderSize,
             drageable: false,
         })
 
@@ -261,38 +250,33 @@ class Mppt {
                 const comRect4 = new Component({ x: lineEndPos[0] - 4 * ComponentSize[0] - 4 * ComponentSpace, y: lineEndPos[1] }, this._group)
                 comRect4.render()
 
-
-
                 const comline = new ComLine({ x: lineEndPos[0], y: lineEndPos[1] }, this._group, segment)
+                comline.render()
 
-                console.log(index)
+
                 const label = ComponentFactory.create('text', {
                     x: lineEndPos[0],
                     y: lineEndPos[1],
                     text: this._data[nameIndex],
                     fontSize: FONT_SIXE,
-                    offset: {
-                        x: ComponentSize[0] * 5 + ComponentSpace * 4, y: 0
-                    },
+
                     fill: '#f00',
                 })
 
-                console.log(lineEndPos)
+
                 if (label) {
-                    label.offsetY(label.height() * 1.5)
+                    label.offsetY(label.height() + 15)
+                    label.offsetX(ComponentSize[0] * 5 + ComponentSpace * 4 - 10)
                     this._group.add(label)
                 }
                 nameIndex++
 
-
-
-                comline.render()
             }
 
             return ComponentFactory.create('line', {
                 points: [...lineStartPos, ...lineEndPos],
                 stroke: index % 2 ? '#ccc' : 'red',
-                strokeWidth: 1,
+                strokeWidth: BorderSize,
             })
         }
 
@@ -310,7 +294,7 @@ class Mppt {
                 width: MPPT_INTERFACE_SIZE[0],
                 height: MPPT_INTERFACE_SIZE[1],
                 stroke: '#000',
-                strokeWidth: 2,
+                strokeWidth: BorderSize,
                 drageable: false,
 
             })
@@ -326,8 +310,6 @@ class Mppt {
             readLine && this._group.add(readLine)
 
         }
-
-
 
     }
 

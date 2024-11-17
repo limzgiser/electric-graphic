@@ -28,6 +28,10 @@ class ComponentFactory {
 
                 return new Konva.Shape(params)
 
+            case 'circle':
+
+                return new Konva.Circle(params)
+
         }
     }
 }
