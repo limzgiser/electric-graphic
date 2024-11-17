@@ -127,7 +127,8 @@ class Component {
             width: ComponentSize[0],
             height: ComponentSize[1],
 
-            stroke: 'blue',
+            stroke: '#000',
+            opacity: 0.6,
             strokeWidth: BorderSize,
             drageable: false,
         })
@@ -252,6 +253,32 @@ class Mppt {
 
                 const comline = new ComLine({ x: lineEndPos[0], y: lineEndPos[1] }, this._group, segment)
                 comline.render()
+
+
+
+                const circel = ComponentFactory.create('circle', {
+                    x: lineEndPos[0] - 2.4 * ComponentSize[0],
+                    y: lineEndPos[1],
+                    radius: IconImageSize[0] / 4,
+                    fill: '#ccc',
+                    stroke: '#000',
+                    strokeWidth: 1,
+                    draggable: false
+                })
+
+
+                if (circel) {
+                    circel.offsetY(-5)
+                    const circle2 = circel.clone()
+                    circle2.offsetX(20)
+
+                    const circle3 = circel.clone()
+                    circle3.offsetX(40)
+
+
+                    this.group.add(circel, circle2, circle3)
+                }
+
 
 
                 const label = ComponentFactory.create('text', {
