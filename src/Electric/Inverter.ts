@@ -264,9 +264,22 @@ class Inverter {
 
     }
 
-    render(data: any) {
+    render(data: any, source: any) {
         if (!data || !data.length) return
 
+        if (!source || !source.length) return
+
+        if (source.length !== data.length) return
+
+
+        const getInverterName = (index: number) => {
+
+
+            let name = Object.keys(source[index])
+
+            return name.length ? name[0] : ''
+
+        }
 
 
         for (let i = 0; i < data.length; i++) {
@@ -296,6 +309,20 @@ class Inverter {
                 const { x, y, height } = rect.getClientRect();
 
                 let points = [x, y, x + MPPT_BOX_SIZE[1], y + height]
+
+                // 逆变器名称
+                const nameText = ComponentFactory.create('text', {
+                    x: x,
+                    y: y,
+                    text: getInverterName(i),
+                    fontSize: FONT_SIXE * 1.4,
+                    fill: '#000',
+                })
+
+                if (nameText) {
+                    nameText.offsetY(nameText.height())
+                    this._acDcLines.add(nameText)
+                }
                 /**
                   *对角线
                 */

@@ -153,9 +153,11 @@ class Component {
 
 class Mppt {
 
+
+    private _name = ''
     private _data: Array<string> = []
     private _group: Konva.Group
-    private start = { x: 1000, y: 11 }
+    private start = { x: 0, y: 0 }
 
     get size() {
         return this._data.length
@@ -165,7 +167,9 @@ class Mppt {
         return this._group
     }
 
-    constructor(data: Array<string>, group: Konva.Group) {
+    constructor(data: Array<string>, group: Konva.Group, name: string) {
+
+        this._name = name
 
         this._data = data
 
@@ -182,7 +186,7 @@ class Mppt {
         const text = ComponentFactory.create('text', {
             x: this.start.x + MPPT_BOX_SIZE[0] / 2,
             y: this.start.y + MPPT_BOX_SIZE[1] / 2,
-            text: 'MPPT1',
+            text: this._name,
             fontSize: FONT_SIXE,
             fill: '#000',
         })

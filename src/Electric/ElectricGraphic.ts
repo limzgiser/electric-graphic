@@ -23,19 +23,19 @@ class ElectriGraphic {
     /**
      * 逆变器
      */
-    public rednerInverter(data: any) {
+    public renderInverter(data: any, source: any) {
 
 
         let group = new Konva.Group()
         this._group.add(group)
-        new Inverter(group).render(data)
+        new Inverter(group).render(data,source)
 
     }
 
     /**
      * mpp包括窜线的组件
      */
-    public redernMppt(data: any, group: Konva.Group) {
+    public redernMppt(data: any, group: Konva.Group, names: string[]) {
 
         let offset = 0
 
@@ -47,7 +47,7 @@ class ElectriGraphic {
 
         data.forEach((item: any, index: number) => {
 
-            const mppt = new Mppt(item, group)
+            const mppt = new Mppt(item, group, names[index])
 
             mppt.render()
 
@@ -92,13 +92,14 @@ class ElectriGraphic {
                 const inverterName = Object.keys(item)[0]
 
                 const mppt = Object.values(item[inverterName])
+                const names = Object.keys(item[inverterName])
 
                 const group = new Konva.Group()
 
                 this._group.add(group)
 
                 groups.push(group)
-                this.redernMppt(mppt, group)
+                this.redernMppt(mppt, group, names)
             }
 
             return groups
@@ -144,9 +145,10 @@ class ElectriGraphic {
         const mppListGroup = this.renderMpptList(data)
 
 
-        this.rednerInverter(mppListGroup)
+        this.renderInverter(mppListGroup, data)
 
 
+        this._group.offset({ x: -1000, y: -100 })
         this._group.scale({ x: 0.6, y: 0.6 })
     }
 }

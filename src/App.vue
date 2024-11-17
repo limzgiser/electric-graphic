@@ -27,7 +27,7 @@ onMounted(() => {
   const electricGraphic = new ElectriGraphic(ElectricData, {}, group);
 
   electricGraphic.render();
-
+ 
   // group.scale({ x: 1.5, y: 0.5 });
   layer.add(group);
 
