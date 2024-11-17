@@ -14,6 +14,10 @@ const SubAddSpace = 20 //   正负极间距
 
 const BorderSize = 1
 
+const LineOpacity = 0.8
+
+
+
 
 export {
     MPPT_BOX_SIZE,
@@ -24,6 +28,7 @@ export {
     ComponentSize,
     ComponentSpace,
     SubAddSpace,
-    BorderSize
+    BorderSize,
+    LineOpacity
 }
 

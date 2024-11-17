@@ -25,7 +25,10 @@ class ElectriGraphic {
      */
     public rednerInverter(data: any) {
 
-        new Inverter(this._group).render(data)
+
+        let group = new Konva.Group()
+        this._group.add(group)
+        new Inverter(group).render(data)
 
     }
 

@@ -1,6 +1,6 @@
 import Konva from "konva"
 import { ComponentFactory } from "./ComponentFactory"
-import { BorderSize, ComponentSize, ComponentSpace, FONT_SIXE, IconImageSize, MPPT_BOX_SIZE, MPPT_INTERFACE_SIZE } from "./Constant"
+import { BorderSize, ComponentSize, ComponentSpace, FONT_SIXE, IconImageSize, LineOpacity, MPPT_BOX_SIZE, MPPT_INTERFACE_SIZE } from "./Constant"
 import { Group } from "konva/lib/Group"
 import { addImage, subImage } from "./data"
 
@@ -62,6 +62,7 @@ class ComLine {
 
             // stroke: '#000',
             strokeWidth: BorderSize,
+            opacity: LineOpacity,
         });
 
         this._group.add(path);
@@ -130,6 +131,7 @@ class Component {
             stroke: '#000',
             opacity: 0.6,
             strokeWidth: BorderSize,
+
             drageable: false,
         })
 
@@ -182,16 +184,14 @@ class Mppt {
             y: this.start.y + MPPT_BOX_SIZE[1] / 2,
             text: 'MPPT1',
             fontSize: FONT_SIXE,
-
-
-            fill: '#00',
+            fill: '#000',
         })
 
         if (!text) return
 
         text.rotate(90)
         text.offsetX(text.width() / 2)
-        text.offsetY(text.height() / 2)
+        text.offsetY(text.height() / 2 - 5)
 
         this._group.add(text)
     }
@@ -207,6 +207,7 @@ class Mppt {
 
             stroke: '#000',
             strokeWidth: BorderSize,
+            opacity: LineOpacity,
             drageable: false,
         })
 
@@ -263,6 +264,7 @@ class Mppt {
                     fill: '#ccc',
                     stroke: '#000',
                     strokeWidth: 1,
+
                     draggable: false
                 })
 
@@ -301,6 +303,7 @@ class Mppt {
                 points: [...lineStartPos, ...lineEndPos],
                 stroke: index % 2 ? '#ccc' : 'red',
                 strokeWidth: BorderSize,
+                opacity: LineOpacity,
             })
         }
 
@@ -319,6 +322,7 @@ class Mppt {
                 height: MPPT_INTERFACE_SIZE[1],
                 stroke: '#000',
                 strokeWidth: BorderSize,
+                opacity: LineOpacity,
                 drageable: false,
 
             })
