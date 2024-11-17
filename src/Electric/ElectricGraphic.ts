@@ -2,12 +2,13 @@ import Konva from "konva"
 import { Mppt } from "./Mppt"
 import { Group } from "konva/lib/Group"
 
+import { Inverter } from "./Inverter"
+
 class ElectriGraphic {
 
-    private _data = null
+    private _data: any = null
     private _group: Konva.Group
     private _props = null
-
 
     constructor(data: any, props: any, group: Konva.Group) {
         this._data = data
@@ -19,23 +20,131 @@ class ElectriGraphic {
     }
 
 
+    /**
+     * 逆变器
+     */
+    public rednerInverter(data: any) {
+
+        new Inverter(this._group).render(data)
+
+    }
+
+    /**
+     * mpp包括窜线的组件
+     */
+    public redernMppt(data: any, group: Konva.Group) {
+
+        let offset = 0
+
+        if (!data || !data.length) return 0
+
+        let offsets: any = [
+
+        ]
+
+        data.forEach((item: any, index: number) => {
+
+            const mppt = new Mppt(item, group)
+
+            mppt.render()
+
+            const { height } = mppt.group.getClientRect();
+
+            offsets.push({
+                value: index == 0 ? 0 : -height + 1,
+                group: mppt.group,
+            })
+
+        });
+
+        for (let i = 0; i < offsets.length; i++) {
+            const item = offsets[i];
+
+            const group: Konva.Group = item.group
+
+            group.offsetY(item.value)
+
+            offset += item.value
+
+        }
+
+        return offset
+
+    }
+
+    /**
+     * mppt 集合
+     */
+    public renderMpptList(data: any) {
+
+
+        const getMpptGroupList = () => {
+            let groups = []
+
+            for (let i = 0; i < data.length; i++) {
+
+                const item = data[i]
+                if (!item || !Object.keys(item).length) continue
+
+                const inverterName = Object.keys(item)[0]
+
+                const mppt = Object.values(item[inverterName])
+
+                const group = new Konva.Group()
+
+                this._group.add(group)
+
+                groups.push(group)
+                this.redernMppt(mppt, group)
+            }
+
+            return groups
+        }
+
+        const udpateOffset = (groups: any) => {
+
+            let offsets = []
+            let offset = 0
+            for (let i = 0; i < groups.length; i++) {
+                const group = groups[i];
+                const { height } = group.getClientRect();
+
+
+                offsets.push({
+                    value: i == 0 ? 0 : -offset,
+                    group: group
+                })
+                offset += (height + 40)
+            }
+
+            offsets.forEach(item => {
+                item.group.offsetY(item.value)
+            })
+
+        }
+
+        const groups = getMpptGroupList()
+
+        udpateOffset(groups)
+        return groups
+
+    }
 
     public render() {
 
-        if (this._data) {
 
-            const group1 = new Mppt(["N2-PV3-9", "N2-PV4-9"], this._group)
+        const data: Array<any> = this._data
 
-            group1.render()
+        if (!Array.isArray(data) || !data.length) return
 
-            const { width, height } = group1.group.getClientRect();
 
-            const group2 = new Mppt(["N2-PV5-9"], this._group)
+        const mppListGroup = this.renderMpptList(data)
 
-            group2.render()
-            group2.group.offsetY(-height + 1)
-        }
 
+        this.rednerInverter(mppListGroup)
+
+
+        this._group.scale({ x: 0.6, y: 0.6 })
     }
 }
 

@@ -2,7 +2,9 @@ const ElectricData = [
     {
         "SG10RT-20": {
             "MPPT1": [
-                "N1-PV1-9"
+                "N1-PV1-9",
+
+
             ],
             "MPPT2": [
                 "N1-PV2-9"
@@ -17,6 +19,14 @@ const ElectricData = [
             ],
             "MPPT2": [
                 "N2-PV5-9"
+            ]
+        }
+    },
+    {
+        "SG15RT-21": {
+            "MPPT1": [
+                "N2-PV6-9",
+                "N2-PV4-9"
             ]
         }
     }

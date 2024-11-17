@@ -220,7 +220,7 @@ class Mppt {
     // 绘制+ / - 接口
     public renderInterFace = () => {
 
-        console.log(this._data)
+
         let size = this._data.length
 
         let segment = size == 2 ? 5 : 3
@@ -275,11 +275,8 @@ class Mppt {
                     const circle3 = circel.clone()
                     circle3.offsetX(40)
 
-
                     this.group.add(circel, circle2, circle3)
                 }
-
-
 
                 const label = ComponentFactory.create('text', {
                     x: lineEndPos[0],
